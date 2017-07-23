@@ -11,7 +11,7 @@ const DATA           = require('gulp-data');
 const IF             = require('gulp-if');
 const CHANGED        = require('gulp-changed');
 const CACHE          = require('gulp-cache');
-const GHPAGES        = require('gulp-gh-pages');
+const FILTER         = require('gulp-filter');
 
 //styles
 const SASS           = require('gulp-sass');
@@ -35,6 +35,9 @@ const BEEP           = require('beepbeep');
 const NOTIFY         = require("gulp-notify");
 const NOTIFIER       = require('node-notifier');
 const BROWSERSYNC    = require('browser-sync').create();
+
+//deploy
+const GHPAGES        = require('gulp-gh-pages');
 
 
 
@@ -123,7 +126,7 @@ var viewsNesting = function(path) {
 
 
 
-/***** assets *****/
+/***** basic file handling *****/
 GULP.task('cleanBuild', function() {
 	return DEL.sync( dirBuild );
 });
@@ -284,11 +287,24 @@ GULP.task('viewsCompile', function(){
 
 
 	//exports to temp file to compare unchanged files
+	.pipe( FILTER(function (file) {
+		return true;
+		
+		var p = file.path;
+		p = p.replace(file.base, '').indexOf('/');
+
+		if( p == -1 ) {
+			return true;
+		}
+
+		return false;
+	}) )
 	.pipe( GULP.dest( dirTemp ) )
 
 
 	//flat file renaming process
 	.pipe( RENAME(function (path) {
+		p = path.dirname;
 		var newPath = path.basename; //gets file base name
 
 		if( newPath.indexOf('__') != 0 ) { //files that start with __ are excluded from the flat file build convention
@@ -296,6 +312,7 @@ GULP.task('viewsCompile', function(){
 		} else {
 			path.basename = (path.basename).substring(2); //exports {{filename}}.html at the root
 		}
+
 	}) )
 	.pipe( GULP.dest( dirBuild ) )
 
@@ -362,8 +379,8 @@ GULP.task('watch', ['server', 'build'], function (){
 
 
 GULP.task('deploy', function() {
-  return GULP.src('dist/**/*')
-    .pipe( GHPAGES() );
+	return GULP.src('dist/**/*')
+	.pipe( GHPAGES() );
 });
 
 

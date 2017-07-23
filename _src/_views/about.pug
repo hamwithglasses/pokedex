@@ -12,17 +12,11 @@ block body
 					.l-row__item.l-row__item--2
 						.c-pokemon.js-pokemon(data-name=p.Name data-id=p.Number)
 							.c-pokemon__icon
-							.c-pokemon__thumb(style="background-image: url('assets/img/pokemon/thumb/" + parseInt(p.Number) + ".jpg');")
-							//-.c-pokemon__info
-								ul.c-pokemon__type
-									if p["Type I"]
-										li(data-type=(p["Type I"][0]).toLowerCase())
-									if p["Type II"]
-										li(data-type=(p["Type II"][0]).toLowerCase())
+							.c-pokemon__thumb(style="background-image: url('assets/img/pokemon/" + parseInt(p.Number) + ".jpg');")
 	.c-hover.js-hover
 		.c-hover__sprite.js-hover-sprite
 		.c-hover__name.js-hover-name
 	
-	//-div(style="display: none")
+	div(style="display: none")
 		each p in context.pokego
 			div(style="background-image: url('assets/img/sprite/" + p.Number + "MS.png');")
