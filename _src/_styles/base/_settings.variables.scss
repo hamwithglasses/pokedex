@@ -1,0 +1,46 @@
+/**********
+Settings
+**********/
+
+$color: (
+	primary: blue,
+	primaryDark: darken(blue, 15),
+	primaryLight: lighten(blue, 15),
+
+	secondary: teal,
+	secondaryDark: darken(teal, 15),
+	secondaryLight: lighten(teal, 15),
+
+	gray: #666666,
+	grayMid: #bcbec0,
+	grayLight: #e9e9e9,
+
+	black: #333333,
+
+	status: (
+		error: red,
+		success: green,
+	)
+);
+
+$font: (
+	family: (
+		base: ('Arial', sans-serif),
+		heading: ('Trebuchet MS', 'Arial', sans-serif)
+	)
+);
+
+$bp: (
+	mobile: 700px,
+	tablet: 1000px,
+	desktop: 1300px
+);
+
+
+
+//css variable table of contents
+$var-maps: (
+	color: $color,
+	font: $font,
+	bp: $bp
+);

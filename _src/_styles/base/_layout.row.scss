@@ -1,0 +1,24 @@
+/**********
+Row
+**********/
+
+.l-row {
+	$gutter: 20px;
+
+	width: calc(100% + #{$gutter});
+
+	@extend %cf;
+	&__item {
+		float: left;
+
+		margin-right: $gutter;
+
+		@for $i from 1 through 12 {
+			&--#{$i} {
+				$width: floor($i / 12 * 100000) / 1000;
+
+				width: calc( #{$width}% - #{$gutter} );
+			}
+		}
+	}
+}

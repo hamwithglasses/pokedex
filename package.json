@@ -1,0 +1,46 @@
+{
+  "name": "toolkit",
+  "version": "1.0.0",
+  "description": "Front-End Toolkit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://hamwithglasses@github.com/hamwithglasses/toolkit.git"
+  },
+  "author": "Kegham Bedoyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hamwithglasses/toolkit/issues"
+  },
+  "homepage": "https://github.com/hamwithglasses/toolkit#readme",
+  "devDependencies": {
+    "beepbeep": "^1.2.1",
+    "browser-sync": "^2.18.12",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-cache": "^0.4.6",
+    "gulp-changed": "^3.1.0",
+    "gulp-cssbeautify": "^0.1.3",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-data": "^1.2.1",
+    "gulp-html-prettify": "0.0.1",
+    "gulp-if": "^2.0.2",
+    "gulp-include": "^2.3.1",
+    "gulp-inline-source": "^3.1.0",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pug": "^3.3.0",
+    "gulp-pug-inheritance": "^0.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "run-sequence": "^2.0.0"
+  },
+  "dependencies": {
+    "node-notifier": "^5.1.2"
+  }
+}

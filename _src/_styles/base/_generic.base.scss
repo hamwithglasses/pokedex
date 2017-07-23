@@ -1,0 +1,22 @@
+/**********
+Base
+
+HTML specific edits and custom resets should go here
+**********/
+
+@include vroot();
+
+html, body {
+	max-width: 100%;
+	height: 100%;
+}
+
+body {
+	overflow-x: hidden;
+
+	color: m($color, gray);
+
+	font-family: m($font, family, base);
+	font-size: 16px;
+	font-weight: 400;
+}

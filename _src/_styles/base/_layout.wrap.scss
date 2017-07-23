@@ -1,0 +1,28 @@
+/**********
+Wrapper
+**********/
+
+.l-wrap {
+	$gutter: 20px;
+
+	position: relative;
+
+	width: 100%;
+	&--max {
+		max-width: 1600px;
+
+		margin-right: auto;
+		margin-left: auto;
+	}
+	&--full {
+	}
+	&--content {
+		max-width: 980px;
+
+		margin-right: auto;
+		margin-left: auto;
+
+		padding-right: #{$gutter};
+		padding-left: #{$gutter};
+	}
+}
