@@ -25,7 +25,7 @@
 			$hover.attr('data-state', 'on');
 
 			$('.js-hover-name').html('<strong>' + id + '</strong> ' + name);
-			$('.js-hover-sprite').css('background-image', 'url("/assets/img/sprite/' + id + 'MS.png")');
+			$('.js-hover-sprite').css('background-image', 'url("assets/img/sprite/' + id + 'MS.png")');
 		});
 		$('.js-pokemon').on('mouseout', function(e){
 			$hover.attr('data-state', 'off');
