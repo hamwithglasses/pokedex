@@ -5,5 +5,17 @@ block vars
 block head
 	
 block body
-	|#{base.url}
-	|#{context.pokedex}
+	.l-wrap
+		.l-wrap.l-wrap--content
+			.l-row
+				each p in context.pokego
+					.l-row__item.l-row__item--2
+						.c-pokemon.js-pokemon(data-name=p.Name data-id=p.Number)
+							.c-pokemon__icon
+							.c-pokemon__thumb(style="background-image: url('/assets/img/pokemon/" + parseInt(p.Number) + ".jpg');")
+							//.c-pokemon__name= p["Name"]
+							//.p-pokemon__type= p["Type I"]
+							//.p-pokemon__type= p["Type II"]
+	.c-hover.js-hover
+		.c-hover__sprite.js-hover-sprite
+		.c-hover__name.js-hover-name

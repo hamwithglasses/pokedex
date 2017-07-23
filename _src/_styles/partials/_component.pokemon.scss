@@ -1,0 +1,111 @@
+.c-pokemon {
+	$p: &;
+
+	position: relative;
+
+	width: 100%;
+
+	padding-top: 100%;
+
+	cursor: none;
+	cursor: pointer;
+
+
+	&:hover {
+		&:after {
+			opacity: 0.4;
+
+			transform: translate3d(0,0,0) scale(1.2);
+		}
+		#{$p}__thumb {
+			transform: translate3d(0,0,0) scale(1.2);
+		}
+	}
+	&:after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 200;
+
+		opacity: 0;
+
+		width: 100%;
+		height: 100%;
+
+		border-radius: 10px;
+
+		content: '';
+
+		background-color: rgba(black, 0.1);
+
+		transition: 0.4s $easeOutBack all;
+		transition-timing-function: $easeOutBack;
+		transform: translate3d(0,0,0) scale(0.75);
+	}
+	&__thumb {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 100;
+
+		width: 100%;
+		height: 100%;
+
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+
+		transition: 0.25s $easeOutBack all;
+		transition-timing-function: $easeOutBack;
+		transform: translate3d(0,0,0) scale(1);
+	}
+	&__icon {
+		$color: black;
+
+		position: absolute;
+		top: calc(50% - 0.5em);
+		left: calc(50% - 0.5em);
+
+		display: block;
+
+		opacity: 0.1;
+
+		width: 1em;
+		height: 1em;
+
+		border-radius: 100%;
+		box-shadow: 0 0 0 0.1em $color;
+
+		font-size: 30px;
+
+
+		&:before {
+			position: absolute;
+			top: 0.3em;
+			left: 0.3em;
+
+			display: block;
+
+			width: 0.4em;
+			height: 0.4em;
+
+			border: 0.1em solid $color;
+			border-radius: 100%;
+
+			content: '';
+		}
+		&:after {
+			position: absolute;
+			top: 0.45em;
+			left: -0.05em;
+
+			width: 1.1em;
+			height: 0.1em;
+
+			border-right: 0.4em solid $color;
+			border-left: 0.4em solid $color;
+
+			content: '';
+		}
+	}
+}

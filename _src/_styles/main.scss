@@ -1,6 +1,9 @@
 //Toolkit
 @import 'toolkit/toolkit';
 
+//Vendor
+@import 'vendor/ceaser';
+
 //Base
 @import 'base/settings.variables';
 @import 'base/generic.base';
@@ -8,4 +11,7 @@
 @import 'base/layout.row';
 
 //Partials
+@import 'partials/component.pokemon';
+@import 'partials/component.hover';
+
 @import 'partials/shame';

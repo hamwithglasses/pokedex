@@ -7,11 +7,14 @@ Row
 
 	width: calc(100% + #{$gutter});
 
+	margin-top: $gutter;
+
 	@extend %cf;
 	&__item {
 		float: left;
 
 		margin-right: $gutter;
+		margin-bottom: $gutter;
 
 		@for $i from 1 through 12 {
 			&--#{$i} {
