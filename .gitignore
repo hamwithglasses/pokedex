@@ -50,4 +50,5 @@ node_modules
 
 # custom ignores
 build
+dist
 _temp
