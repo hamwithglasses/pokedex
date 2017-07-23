@@ -11,6 +11,7 @@ const DATA           = require('gulp-data');
 const IF             = require('gulp-if');
 const CHANGED        = require('gulp-changed');
 const CACHE          = require('gulp-cache');
+const GHPAGES        = require('gulp-gh-pages');
 
 //styles
 const SASS           = require('gulp-sass');
@@ -360,7 +361,10 @@ GULP.task('watch', ['server', 'build'], function (){
 
 
 
-
+GULP.task('deploy', function() {
+  return GULP.src('dist/**/*')
+    .pipe( GHPAGES() );
+});
 
 
 
@@ -394,7 +398,7 @@ GULP.task('dist', function (callback) {
 	dev = false;
 	dirBuild = 'dist/';
 	RUNSEQUENCE(
-		'devBuild'
+		'build'
 	);
 });
 
