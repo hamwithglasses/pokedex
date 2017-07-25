@@ -1,3 +1,6 @@
+//=require vendor/jquery.magnific-popup.js
+//=require vendor/twig.js
+
 (function(window, document, $, undefined) {
 	'use strict';
 
@@ -8,12 +11,16 @@
 
 		var $hover = $('.js-hover');
 
+		var twigPop = Twig.twig({
+			data: $('#twig-pop').html()
+		});
+
 		$('body').on('mousemove', function(e){
 			x = e.clientX;
 			y = e.clientY;
 			top = window.pageYOffset || document.documentElement.scrollTop;
 
-			$hover.css('top', y + top);
+			$hover.css('top', y);
 			$hover.css('left', x);
 		});
 
@@ -25,10 +32,24 @@
 			$hover.attr('data-state', 'on');
 
 			$('.js-hover-name').html('<strong>' + id + '</strong> ' + name);
-			$('.js-hover-sprite').css('background-image', 'url("assets/img/sprite/' + id + 'MS.png")');
+			$('.js-hover-sprite').css('background-image', 'url("assets/img/pokemon/sprite/' + id + 'MS.png")');
 		});
 		$('.js-pokemon').on('mouseout', function(e){
 			$hover.attr('data-state', 'off');
+		});
+
+		//pop
+		$('.js-pokemon').on('click', function(){
+			var $that = $(this);
+			var name = $that.attr('data-name');
+			var id = $that.attr('data-id');
+
+			$.magnificPopup.open({
+				items: {
+					src: twigPop.render({name: name, id: id}),
+					type: 'inline'
+				}
+			});
 		});
 	});
 

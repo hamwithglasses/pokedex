@@ -11,17 +11,35 @@ Row
 
 	@extend %cf;
 	&__item {
+		@include bp( 0, m($bp, small) ) {
+			&--card {
+				width: calc(50% - #{$gutter});
+			}
+		}
+		@include bp( m($bp, small) ) {
+			&--card {
+				width: calc(33.33% - #{$gutter});
+			}
+		}
+		@include bp( m($bp, mobile) ) {
+			&--card {
+				width: calc(25% - #{$gutter});
+			}
+		}
+		@include bp( m($bp, tablet) ) {
+			&--card {
+				width: calc(20% - #{$gutter});
+			}
+		}
+		@include bp( m($bp, desktop) ) {
+			&--card {
+				width: calc(16.66% - #{$gutter});
+			}
+		}
+
 		float: left;
 
 		margin-right: $gutter;
 		margin-bottom: $gutter;
-
-		@for $i from 1 through 12 {
-			&--#{$i} {
-				$width: floor($i / 12 * 100000) / 1000;
-
-				width: calc( #{$width}% - #{$gutter} );
-			}
-		}
 	}
 }

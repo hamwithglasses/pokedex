@@ -1,0 +1,64 @@
+.c-header {
+	@include bp(m($bp, tablet)) {
+		padding-top: 130px;
+		padding-bottom: 130px;
+	}
+
+	padding-top: vw(130px, m($bp, tablet));
+	padding-bottom: vw(130px, m($bp, tablet));
+	&__title {
+		position: relative;
+
+		color: white;
+
+		text-align: center;
+		em {
+			@include bp(m($bp, tablet)) {
+				font-size: 55px;
+			}
+
+			position: relative;
+			z-index: 200;
+
+			font-family: m($font, family, base);
+			font-size: vw(55px, m($bp, tablet));
+		}
+		strong {
+			@include bp( m($bp, tablet) ) {
+				font-size: 130px;
+			}
+
+			position: relative;
+			z-index: 100;
+
+			display: block;
+
+			font-family: m($font, family, heading);
+			font-size: vw(130px, m($bp, tablet));
+			line-height: 0.7em;
+
+			text-transform: uppercase;
+		}
+		&:after {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			z-index: 1;
+
+			display: none;
+
+			width: 70%;
+			height: 200%;
+
+			margin-top: 4%;
+
+			border-radius: 100%;
+
+			content: '';
+
+			background-color: rgba(black, 0.1);
+
+			transform: rotate(-5deg) skew(10deg, 10deg) translate3d(-50%, -50%, 0);
+		}
+	}
+}

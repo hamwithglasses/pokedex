@@ -3,26 +3,50 @@ extends templates/base.pug
 block vars
 
 block head
+	//-style
+		each p in context.pokego
+			|#preload-#{p.Number} { background: url('assets/img/sprite/#{p.Number}MS.png'); }
 	
 block body
 	.l-wrap
 		.l-wrap.l-wrap--content
+			.c-header
+				.c-header__title #[em Professor Mackey's] #[strong Pokedex]
+	.l-wrap
+		.l-wrap.l-wrap--content
 			.l-row
-				each p in context.pokego
-					.l-row__item.l-row__item--2
-						.c-pokemon.js-pokemon(data-name=p.Name data-id=p.Number)
-							.c-pokemon__icon
-							.c-pokemon__thumb(style="background-image: url('assets/img/pokemon/thumb/" + parseInt(p.Number) + ".jpg');")
-							//-.c-pokemon__info
-								ul.c-pokemon__type
-									if p["Type I"]
-										li(data-type=(p["Type I"][0]).toLowerCase())
-									if p["Type II"]
-										li(data-type=(p["Type II"][0]).toLowerCase())
-	.c-hover.js-hover
-		.c-hover__sprite.js-hover-sprite
-		.c-hover__name.js-hover-name
+				each p in context.pokedex
+					- if( context.unavailable.indexOf( parseInt(p.id) ) == -1 )
+						.l-row__item.l-row__item--card
+							.c-pokemon.js-pokemon(data-state="available" data-name=p.ename data-id=p.id)
+								.c-pokemon__icon
+								.c-pokemon__thumb(style="background-image: url('" + base.url + "/assets/img/pokemon/thumb/" + parseInt(p.id) + ".jpg');")
+					- else
+						.l-row__item.l-row__item--card
+							.c-pokemon
+								.c-pokemon__icon
+									
+	.c-tooltip.c-tooltip--hover.js-hover
+		.c-tooltip__bg
+			.c-tooltip__sprite.js-hover-sprite
+			.c-tooltip__name.js-hover-name
 	
 	//-div(style="display: none")
 		each p in context.pokego
 			div(style="background-image: url('assets/img/sprite/" + p.Number + "MS.png');")
+
+block scripts
+	script(id="twig-pop" type="text/x-twig-template")
+		.c-pop
+			.c-pop__img(style="background-image: url('" + base.url + "/assets/img/pokemon/thumb/{{id|number_format}}.jpg');")
+			.c-pop__content
+				.c-tooltip
+					.c-tooltip__bg
+						.c-tooltip__sprite(style="background-image: url('" + base.url + "/assets/img/pokemon/sprite/{{id}}MS.png');")
+						.c-tooltip__name
+							strong {{id}}
+							|{{name}}
+						.c-tooltip__type
+						a(href=base.url + "/assets/img/pokemon/full/{{id|number_format}}.jpg" download).c-tooltip__download: i.fa.fa-download
+				.c-pop__stats
+					

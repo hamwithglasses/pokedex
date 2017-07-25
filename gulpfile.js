@@ -49,11 +49,15 @@ var srcBase          = '_src/';
 var srcStyles        = srcBase + '_styles/';
 var srcScripts       = srcBase + '_scripts/';
 var srcViews         = srcBase + '_views/';
+var srcData          = srcBase + '_data/';
+
 var srcAssets        = [
 	srcBase + '**/*',
 	srcBase + '**/.*',
 
 	//compiled files
+	'!' + srcData,
+	'!' + srcData + '**/*',
 	'!' + srcStyles,
 	'!' + srcStyles + '**/*',
 	'!' + srcViews,
@@ -153,6 +157,25 @@ GULP.task('copyFiles', function(){
 
 
 
+/***** data *****/
+//finds all data in the /_views/data folder and includes it in compile
+GULP.task('data', function(){
+	return GULP.src( srcData + '*.+(json)' )
+	.pipe( DATA(function(file){
+		//gets name of file excluding json extension
+		var path = file.history[0].replace(file.base, '').split('.');
+		path.pop();
+		path = path.join('.');
+
+		//passes data over in context as filename
+		dataViews.context[path] = JSON.parse(file.contents.toString());
+	}) )
+});
+
+
+
+
+
 /***** styles *****/
 //Compiles sass files and exports minified and unminified css files
 GULP.task('styles', function(){
@@ -227,22 +250,8 @@ GULP.task('scripts', function(callback) {
 
 
 /***** views *****/
-//finds all data in the /_views/data folder and includes it in compile
-GULP.task('viewsData', function(){
-	return GULP.src( srcViews + 'data/*.+(json)' )
-	.pipe( DATA(function(file){
-		//gets name of file excluding json extension
-		var path = file.history[0].replace(file.base, '').split('.');
-		path.pop();
-		path = path.join('.');
-
-		//passes data over in context as filename
-		dataViews.context[path] = JSON.parse(file.contents.toString());
-	}) )
-});
-
 //Compiles pug/jade and exports it into a temp folder
-GULP.task('viewsCompile', function(){
+GULP.task('views', function(){
 	return GULP
 
 
@@ -252,8 +261,8 @@ GULP.task('viewsCompile', function(){
 
 
 	//only compiles changed files
-	.pipe( IF( watch, CHANGED( dirTemp, {extension: '.html'} ) ) )
-	.pipe( IF( watch, PUGINHERITANCE({basedir: srcViews, skip: 'node_modules'}) ) )
+	.pipe( IF( check, CHANGED( dirTemp, {extension: '.html'} ) ) )
+	.pipe( IF( check, PUGINHERITANCE({basedir: srcViews, skip: 'node_modules'}) ) )
 
 
 	//passes data to pug file
@@ -287,19 +296,17 @@ GULP.task('viewsCompile', function(){
 
 
 	//exports to temp file to compare unchanged files
-	.pipe( FILTER(function (file) {
-		return true;
-		
-		var p = file.path;
-		p = p.replace(file.base, '').indexOf('/');
-
-		if( p == -1 ) {
-			return true;
-		}
-
-		return false;
-	}) )
 	.pipe( GULP.dest( dirTemp ) )
+
+	.pipe( FILTER(function (file) {
+		var p = file.relative.indexOf('/');
+
+		if(p == -1) {
+			return true;
+		}else{
+			return false;
+		}
+	}) )
 
 
 	//flat file renaming process
@@ -320,10 +327,23 @@ GULP.task('viewsCompile', function(){
 	.pipe( PLUMBER.stop() )
 });
 
-GULP.task('views', function(callback){
+GULP.task('viewsCheck', function(callback){
+	check = true;
+
 	RUNSEQUENCE(
-		'viewsData',
-		'viewsCompile',
+		'data',
+		'views',
+		'serverReload',
+		callback
+	)
+});
+
+GULP.task('viewsForce', function(callback){
+	check = false;
+
+	RUNSEQUENCE(
+		'data',
+		'views',
 		'serverReload',
 		callback
 	)
@@ -355,33 +375,61 @@ GULP.task('serverReload', function() {
 
 
 
+/***** tasks to run *****/
+GULP.task('default', function() {
+	console.log(' ');
+	console.log('Hi there! Below are a few useful commands:');
+	console.log(' ');
+	console.log('watch: Builds and watches files for local development.');
+	console.log('dev:   Similar to watch, but allows inlining assets and can be slower.');
+	console.log('dist:  Just like dev but flagged for distribution.');
+	console.log(' ');
+});
 
-
-//main tasks for user to run
+//local build process for development
 GULP.task('build', function(callback){
 	RUNSEQUENCE(
 		['cleanBuild', 'cleanTemp'],
-		['styles', 'scripts', 'views', 'copyFiles'],
+		['styles', 'scripts', 'viewsForce', 'copyFiles'],
 		callback
 	)
 });
 
+//watch build task
 GULP.task('watch', ['server', 'build'], function (){
 	watch = true;
 
+	GULP.watch( srcData + '**/*', ['viewsForce'] ).on('error', gazeError);
 	GULP.watch( srcStyles + '**/*', ['styles'] ).on('error', gazeError);
 	GULP.watch( srcScripts + '**/*', ['scripts'] ).on('error', gazeError);
-	GULP.watch( srcViews + '**/*', ['views'] ).on('error', gazeError);
+	GULP.watch( srcViews + '**/*', ['viewsCheck'] ).on('error', gazeError);
 
 	GULP.watch( srcAssets, ['copyFiles'] ).on('error', gazeError);
 });
 
+//distribution build
+GULP.task('dist', function (callback) {
+	dev = false;
+	dirBuild = 'dist/';
+	RUNSEQUENCE(
+		'build'
+	);
+});
 
-
+//github pages deployment
 GULP.task('deploy', function() {
 	return GULP.src('dist/**/*')
 	.pipe( GHPAGES() );
 });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -410,23 +458,3 @@ GULP.task('devBuild', function(callback){
 GULP.task('dev', ['server', 'devBuild'], function(){
 	GULP.watch( [srcBase + '**/*'], ['devBuild'] ).on('error', gazeError)
 })
-
-GULP.task('dist', function (callback) {
-	dev = false;
-	dirBuild = 'dist/';
-	RUNSEQUENCE(
-		'build'
-	);
-});
-
-
-
-GULP.task('default', function() {
-	console.log(' ');
-	console.log('Hi there! Below are a few useful commands:');
-	console.log(' ');
-	console.log('watch: Builds and watches files for local development.');
-	console.log('dev:   Similar to watch, but allows inlining assets and can be slower.');
-	console.log('dist:  Just like dev but flagged for distribution.');
-	console.log(' ');
-});

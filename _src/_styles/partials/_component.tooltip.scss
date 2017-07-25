@@ -1,0 +1,152 @@
+.c-tooltip {
+	position: relative;
+	&--hover {
+		@include bp( m($bp, desktop) ) {
+			display: block;
+		}
+
+		position: fixed;
+		z-index: 500;
+
+		display: none;
+
+		opacity: 0;
+
+		width: auto;
+
+		margin-top: 10px;
+		margin-left: 10px;
+
+		border-radius: 40px;
+
+		background-color: white;
+
+		transition: opacity 0.25s ease;
+		&[data-state="on"] {
+			opacity: 1;
+		}
+	}
+	&__bg {
+		width: 100%;
+		height: 50px;
+
+		padding-right: 20px;
+		padding-left: 85px;
+
+		line-height: 50px;
+	}
+	&__name {
+		color: black;
+
+		font-family: 'pokemon-font', monospace;
+		font-size: 8px;
+		font-smooth: never;
+
+		-webkit-font-smoothing: none;
+		strong {
+			position: absolute;
+			top: 0;
+			left: 50px;
+		}
+	}
+	&__sprite {
+		position: absolute;
+		top: 5px;
+		left: 5px;
+
+		width: 40px;
+		height: 40px;
+
+		border-radius: 100%;
+
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	&__download {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+
+		width: 30px;
+		height: 30px;
+
+		border-radius: 4px;
+
+		font-size: 14px;
+		line-height: 28px;
+
+		text-align: center;
+	}
+	&__type {
+		//background-color: red;
+		position: absolute;
+		top: 2px;
+		right: 10px;
+		li {
+			display: inline-block;
+
+			width: 10px;
+			height: 10px;
+
+			margin-left: 5px;
+
+			border-radius: 100%;
+
+
+			&[data-type="normal"] {
+				background-color: #a8a878;
+			}
+			&[data-type="fire"] {
+				background-color: #f08030;
+			}
+			&[data-type="water"] {
+				background-color: #6890f0;
+			}
+			&[data-type="grass"] {
+				background-color: #78c850;
+			}
+			&[data-type="electric"] {
+				background-color: #f8d030;
+			}
+			&[data-type="ice"] {
+				background-color: #98d8d8;
+			}
+			&[data-type="ground"] {
+				background-color: #e0c068;
+			}
+			&[data-type="flying"] {
+				background-color: #a890f0;
+			}
+			&[data-type="poison"] {
+				background-color: #a040a0;
+			}
+			&[data-type="fighting"] {
+				background-color: #c03028;
+			}
+			&[data-type="psychic"] {
+				background-color: #f85888;
+			}
+			&[data-type="dark"] {
+				background-color: #705848;
+			}
+			&[data-type="rock"] {
+				background-color: #b8a038;
+			}
+			&[data-type="bug"] {
+				background-color: #a8b820;
+			}
+			&[data-type="ghost"] {
+				background-color: #705898;
+			}
+			&[data-type="steel"] {
+				background-color: #b8b8d0;
+			}
+			&[data-type="dragon"] {
+				background-color: #7038f8;
+			}
+			&[data-type="fairy"] {
+				background-color: #ffaec9;
+			}
+		}
+	}
+}

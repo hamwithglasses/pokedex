@@ -7,7 +7,7 @@ $color: (
 	primaryDark: darken(blue, 15),
 	primaryLight: lighten(blue, 15),
 
-	secondary: #ffe1c8,
+	secondary: #ffe1c7,
 	secondaryDark: darken(teal, 15),
 	secondaryLight: lighten(teal, 15),
 
@@ -25,12 +25,13 @@ $color: (
 
 $font: (
 	family: (
-		base: ('Arial', sans-serif),
-		heading: ('Trebuchet MS', 'Arial', sans-serif)
+		base: ('Racing Sans One', sans-serif),
+		heading: ('Chango', sans-serif)
 	)
 );
 
 $bp: (
+	small: 500px,
 	mobile: 700px,
 	tablet: 1000px,
 	desktop: 1300px

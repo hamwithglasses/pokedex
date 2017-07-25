@@ -3,6 +3,7 @@
 
 //Vendor
 @import 'vendor/ceaser';
+@import 'vendor/magnific-popup';
 
 //Base
 @import 'base/settings.variables';
@@ -11,7 +12,9 @@
 @import 'base/layout.row';
 
 //Partials
+@import 'partials/component.header';
 @import 'partials/component.pokemon';
-@import 'partials/component.hover';
+@import 'partials/component.tooltip';
+@import 'partials/component.pop';
 
 @import 'partials/shame';
